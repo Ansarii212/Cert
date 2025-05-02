@@ -157,15 +157,17 @@
 
 <div id="final-certificate" class="certificate-container">
   <img class="logo" src="https://upload.wikimedia.org/wikipedia/ar/thumb/6/6b/Logo_of_Ministry_of_Education_Saudi_Arabia.svg/512px-Logo_of_Ministry_of_Education_Saudi_Arabia.svg.png" onerror="this.style.display='none'">
+  
   <h1 class="title">
-  <img class="medal" src="https://cdn-icons-png.flaticon.com/512/2583/2583391.png">
-  شهادة تقدير
-  <img class="medal" src="https://cdn-icons-png.flaticon.com/512/2583/2583391.png">
-</h1>
-<br>
-<div id="student-name" class="recipient" style="margin-top: 10px;"></div>
+    <img class="medal" src="https://cdn-icons-png.flaticon.com/512/2583/2583391.png">
+    شهادة تقدير
+    <img class="medal" src="https://cdn-icons-png.flaticon.com/512/2583/2583391.png">
+  </h1>
+
+  <div id="student-name" class="recipient"></div>
   <div id="student-grade" class="grade"></div>
   <div class="thanks" id="thanks-message"></div>
+
   <div class="school-director">
     <span id="school-name"></span>
     <div class="signature">توقيع المدير/ة</div>
@@ -212,7 +214,7 @@
     const director = document.getElementById('director').value;
     const thanks = document.getElementById('thanks').value;
 
-    document.getElementById('student-name').textContent = `${type} : ${name}`;
+    document.getElementById('student-name').textContent = `${type}: ${name}`;
     document.getElementById('student-grade').textContent = `الصف: ${grade}`;
     document.getElementById('school-name').textContent = `المدرسة: ${school}`;
     document.getElementById('director-name').textContent = `المدير/ة: ${director}`;
@@ -232,27 +234,4 @@
 
   function downloadPDF() {
     const { jsPDF } = window.jspdf;
-    html2canvas(document.querySelector("#final-certificate")).then(canvas => {
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'pt', 'a4');
-      const width = pdf.internal.pageSize.getWidth();
-      const height = canvas.height * width / canvas.width;
-      pdf.addImage(imgData, 'PNG', 0, 0, width, height);
-      pdf.save("شهادة_تقدير.pdf");
-    });
-  }
-
-  function shareCertificate() {
-    if (navigator.share) {
-      navigator.share({
-        title: 'شهادة تقدير',
-        text: 'أنشئ شهادة تقدير رائعة!',
-        url: window.location.href
-      }).catch(console.error);
-    } else {
-      alert("المشاركة غير مدعومة في هذا المتصفح.");
-    }
-  }
-</script>
-</body>
-</html>
+    html2canvas(document.querySelector("#final-certificate")).
