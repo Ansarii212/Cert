@@ -127,7 +127,12 @@
     }
     .footer-buttons {
       margin-top: 20px;
-      display: none; /* إخفاء الأزرار افتراضيًا */
+      display: none;
+    }
+    #input-warning, #safari-warning {
+      color: red;
+      font-size: 16px;
+      margin-top: 10px;
     }
   </style>
 </head>
@@ -145,6 +150,7 @@
   <input type="text" id="director" placeholder="أدخل اسم المدير/ة" oninput="hideCertificate()">
   <textarea id="thanks" placeholder="أدخل عبارات الشكر هنا" oninput="hideCertificate()"></textarea>
   <button class="btn" onclick="showPopup()">عرض الشهادة</button>
+  <p id="input-warning" style="display: none;">تنبيه : رجاء كتابة جميع البيانات</p>
 </div>
 
 <div id="popup">
@@ -159,12 +165,12 @@
   <img class="logo" src="https://upload.wikimedia.org/wikipedia/ar/thumb/6/6b/Logo_of_Ministry_of_Education_Saudi_Arabia.svg/512px-Logo_of_Ministry_of_Education_Saudi_Arabia.svg.png" onerror="this.style.display='none'">
 
   <h1 class="title">
-  <img class="medal" src="https://cdn-icons-png.flaticon.com/512/2583/2583391.png">
-  شهادة تقدير
-  <img class="medal" src="https://cdn-icons-png.flaticon.com/512/2583/2583391.png">
-</h1>
-<br>
-<div id="student-name" class="recipient" style="margin-top: 10px;"></div>
+    <img class="medal" src="https://cdn-icons-png.flaticon.com/512/2583/2583391.png">
+    شهادة تقدير
+    <img class="medal" src="https://cdn-icons-png.flaticon.com/512/2583/2583391.png">
+  </h1>
+  <br>
+  <div id="student-name" class="recipient"></div>
   <div id="student-grade" class="grade"></div>
   <div class="thanks" id="thanks-message"></div>
 
@@ -180,16 +186,34 @@
   <button class="btn" onclick="downloadPDF()">تحويل إلى PDF</button>
   <button class="btn" onclick="shareCertificate()">مشاركة</button>
 </div>
+<p id="safari-warning" style="display: none;">تنبيه : اذا لم يتم حفظ الصورة عبر متصفح سفاري رجاء افتح الصفحة من خلال متصفح كروم</p>
 
 <script>
   let countdown;
 
   function hideCertificate() {
     document.getElementById('final-certificate').style.display = 'none';
+    document.querySelector('.footer-buttons').style.display = 'none';
+    document.getElementById('safari-warning').style.display = 'none';
   }
 
   function showPopup() {
+    const type = document.getElementById('type').value.trim();
+    const name = document.getElementById('name').value.trim();
+    const grade = document.getElementById('grade').value.trim();
+    const school = document.getElementById('school').value.trim();
+    const director = document.getElementById('director').value.trim();
+    const thanks = document.getElementById('thanks').value.trim();
+    const warning = document.getElementById('input-warning');
+
+    if (!type || !name || !grade || !school || !director || !thanks) {
+      warning.style.display = 'block';
+      return;
+    }
+
+    warning.style.display = 'none';
     document.getElementById('popup').style.display = 'block';
+
     let time = 60;
     document.getElementById('timer').textContent = "01:00";
     clearInterval(countdown);
@@ -221,7 +245,8 @@
     document.getElementById('thanks-message').textContent = thanks;
 
     document.getElementById('final-certificate').style.display = 'block';
-    document.querySelector('.footer-buttons').style.display = 'block';  // إظهار الأزرار بعد الشهادة
+    document.querySelector('.footer-buttons').style.display = 'block';
+    document.getElementById('safari-warning').style.display = 'block';
   }
 
   function downloadImage() {
