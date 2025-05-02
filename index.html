@@ -127,6 +127,7 @@
     }
     .footer-buttons {
       margin-top: 20px;
+      display: none; /* إخفاء الأزرار افتراضيًا */
     }
   </style>
 </head>
@@ -220,6 +221,7 @@
     document.getElementById('thanks-message').textContent = thanks;
 
     document.getElementById('final-certificate').style.display = 'block';
+    document.querySelector('.footer-buttons').style.display = 'block';  // إظهار الأزرار بعد الشهادة
   }
 
   function downloadImage() {
