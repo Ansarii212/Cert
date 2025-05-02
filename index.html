@@ -9,13 +9,12 @@
   <style>
     body {
       font-family: 'Amiri', serif;
-      background: url('https://www.transparenttextures.com/patterns/beige-paper.png');
+      background: #f5f0e6;
       margin: 0;
       padding: 0;
       text-align: center;
       color: #4b2e2e;
     }
-
     .certificate-container {
       border: 6px double #8b5e3c;
       border-radius: 20px;
@@ -25,38 +24,26 @@
       width: 90%;
       max-width: 800px;
       position: relative;
-      display: none;
-      animation: fadeIn 2s ease-in-out forwards;
     }
-
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: scale(0.95); }
-      100% { opacity: 1; transform: scale(1); }
-    }
-
     h1.title {
       font-size: 40px;
-      margin: 10px 0;
+      margin: 10px 0 0;
+      border: 2px dotted #a67c52;
       padding: 10px;
       background-color: #fcebd2;
       display: inline-block;
-      border: 2px dotted #a67c52;
-      position: relative;
     }
-
     .medal {
       width: 30px;
       vertical-align: middle;
       margin: 0 10px;
     }
-
     .logo {
       position: absolute;
       top: 20px;
       left: 20px;
       width: 60px;
     }
-
     .input-section {
       background-color: #f3e5d1;
       padding: 20px;
@@ -66,7 +53,6 @@
       max-width: 600px;
       border: 2px dotted #a67c52;
     }
-
     .input-section input, select, textarea {
       display: block;
       margin: 10px auto;
@@ -77,12 +63,10 @@
       border-radius: 10px;
       border: 1px solid #a67c52;
     }
-
     textarea {
-      min-height: 120px;
+      min-height: 100px;
       resize: vertical;
     }
-
     .btn {
       background-color: #f5d7a1;
       color: #000;
@@ -92,14 +76,7 @@
       border-radius: 12px;
       cursor: pointer;
       font-size: 16px;
-      transition: all 0.3s ease;
     }
-
-    .btn:hover {
-      background-color: #e1be90;
-      transform: scale(1.05);
-    }
-
     #popup {
       display: none;
       background-color: #f9f1e5;
@@ -110,12 +87,14 @@
       max-width: 500px;
       border: 2px solid #8b5e3c;
     }
-
     #timer {
       font-size: 28px;
       font-weight: bold;
     }
-
+    #final-certificate {
+      display: none;
+      margin: 30px auto;
+    }
     .recipient {
       font-size: 28px;
       font-weight: bold;
@@ -123,21 +102,18 @@
       display: inline-block;
       padding: 10px 20px;
       border-radius: 10px;
-      margin-top: 20px;
+      margin-top: 15px;
     }
-
     .grade {
       font-size: 22px;
       margin-top: 5px;
     }
-
     .thanks {
       font-size: 20px;
       margin-top: 20px;
       line-height: 1.7;
       white-space: pre-line;
     }
-
     .school-director {
       display: flex;
       justify-content: space-between;
@@ -145,12 +121,10 @@
       margin-top: 40px;
       font-weight: bold;
     }
-
     .signature {
       text-align: center;
       flex: 1;
     }
-
     .footer-buttons {
       margin-top: 20px;
     }
@@ -177,19 +151,22 @@
   <div id="timer">01:00</div>
   <p>يرجى الاشتراك:</p>
   <a class="btn" href="youtube://channel/UCOyD7hrUD4FH02uSaHkVd6A">يوتيوب</a>
-  <a class="btn" href="x://user?screen_name=forms_teachers">X (تويتر)</a>
+  <a class="btn" href="x://user?screen_name=forms_teachers">X</a>
 </div>
 
 <div id="final-certificate" class="certificate-container">
   <img class="logo" src="https://upload.wikimedia.org/wikipedia/ar/thumb/6/6b/Logo_of_Ministry_of_Education_Saudi_Arabia.svg/512px-Logo_of_Ministry_of_Education_Saudi_Arabia.svg.png" onerror="this.style.display='none'">
+
   <h1 class="title">
     <img class="medal" src="https://cdn-icons-png.flaticon.com/512/2583/2583391.png">
     شهادة تقدير
     <img class="medal" src="https://cdn-icons-png.flaticon.com/512/2583/2583391.png">
   </h1>
+
   <div id="student-name" class="recipient"></div>
   <div id="student-grade" class="grade"></div>
   <div class="thanks" id="thanks-message"></div>
+
   <div class="school-director">
     <span id="school-name"></span>
     <div class="signature">توقيع المدير/ة</div>
@@ -242,9 +219,7 @@
     document.getElementById('director-name').textContent = `المدير/ة: ${director}`;
     document.getElementById('thanks-message').textContent = thanks;
 
-    const cert = document.getElementById('final-certificate');
-    cert.style.display = 'block';
-    cert.classList.add("fadeIn");
+    document.getElementById('final-certificate').style.display = 'block';
   }
 
   function downloadImage() {
