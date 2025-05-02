@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>شهادة تقدير</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: 'Amiri', serif;
+      background: #f5f0e6;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      color: #4b2e2e;
+    }
+    .certificate-container {
+      border: 6px double #8b5e3c;
+      border-radius: 20px;
+      margin: 20px auto;
+      padding: 40px;
+      background: #fffaf0;
+      width: 90%;
+      max-width: 800px;
+      position: relative;
+    }
+    h1.title {
+      font-size: 40px;
+      margin: 10px 0;
+      border: 2px dotted #a67c52;
+      padding: 10px;
+      background-color: #fcebd2;
+      display: inline-block;
+      position: relative;
+    }
+    .medal {
+      width: 30px;
+      vertical-align: middle;
+      margin: 0 10px;
+    }
+    .logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 60px;
+    }
+    .input-section {
+      background-color: #f3e5d1;
+      padding: 20px;
+      border-radius: 15px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 600px;
+      border: 2px dotted #a67c52;
+    }
+    .input-section input, select, textarea {
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      width: 90%;
+      font-size: 16px;
+      text-align: center;
+      border-radius: 10px;
+      border: 1px solid #a67c52;
+    }
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    .btn {
+      background-color: #f5d7a1;
+      color: #000;
+      padding: 10px 20px;
+      margin: 10px 5px;
+      border: 2px solid #8b5e3c;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    #popup {
+      display: none;
+      background-color: #f9f1e5;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 500px;
+      border: 2px solid #8b5e3c;
+    }
+    #timer {
+      font-size: 28px;
+      font-weight: bold;
+    }
+    #final-certificate {
+      display: none;
+      margin: 30px auto;
+    }
+    .recipient {
+      font-size: 28px;
+      font-weight: bold;
+      background-color: #fcebd2;
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    .grade {
+      font-size: 22px;
+      margin-top: 5px;
+    }
+    .thanks {
+      font-size: 20px;
+      margin-top: 20px;
+      line-height: 1.7;
+      white-space: pre-line;
+    }
+    .school-director {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 40px;
+      font-weight: bold;
+    }
+    .signature {
+      text-align: center;
+      flex: 1;
+    }
+    .footer-buttons {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="input-section">
+  <h2>بيانات الشهادة</h2>
+  <select id="type" onchange="hideCertificate()">
+    <option value="الطالب">الطالب</option>
+    <option value="الطالبة">الطالبة</option>
+  </select>
+  <input type="text" id="name" placeholder="أدخل الاسم هنا" oninput="hideCertificate()">
+  <input type="text" id="grade" placeholder="أدخل الصف" oninput="hideCertificate()">
+  <input type="text" id="school" placeholder="أدخل اسم المدرسة" oninput="hideCertificate()">
+  <input type="text" id="director" placeholder="أدخل اسم المدير/ة" oninput="hideCertificate()">
+  <textarea id="thanks" placeholder="أدخل عبارات الشكر هنا" oninput="hideCertificate()"></textarea>
+  <button class="btn" onclick="showPopup()">عرض الشهادة</button>
+</div>
+
+<div id="popup">
+  <div>جاري إصدار الشهادة</div>
+  <div id="timer">01:00</div>
+  <p>يرجى الاشتراك:</p>
+  <a class="btn" href="youtube://channel/UCOyD7hrUD4FH02uSaHkVd6A">يوتيوب</a>
+  <a class="btn" href="twitter://user?screen_name=forms_teachers">تويتر</a>
+</div>
+
+<div id="final-certificate" class="certificate-container">
+  <img class="logo" src="https://upload.wikimedia.org/wikipedia/ar/thumb/6/6b/Logo_of_Ministry_of_Education_Saudi_Arabia.svg/512px-Logo_of_Ministry_of_Education_Saudi_Arabia.svg.png" onerror="this.style.display='none'">
+  <h1 class="title">
+    <img class="medal" src="https://cdn-icons-png.flaticon.com/512/2583/2583391.png">
+    شهادة تقدير
+    <img class="medal" src="https://cdn-icons-png.flaticon.com/512/2583/2583391.png">
+  </h1>
+  <div id="student-name" class="recipient"></div>
+  <div id="student-grade" class="grade"></div>
+  <div class="thanks" id="thanks-message"></div>
+  <div class="school-director">
+    <span id="school-name"></span>
+    <div class="signature">توقيع المدير/ة</div>
+    <span id="director-name"></span>
+  </div>
+</div>
+
+<div class="footer-buttons">
+  <button class="btn" onclick="downloadImage()">حفظ الصورة</button>
+  <button class="btn" onclick="downloadPDF()">تحويل إلى PDF</button>
+  <button class="btn" onclick="shareCertificate()">مشاركة</button>
+</div>
+
+<script>
+  let countdown;
+
+  function hideCertificate() {
+    document.getElementById('final-certificate').style.display = 'none';
+  }
+
+  function showPopup() {
+    document.getElementById('popup').style.display = 'block';
+    let time = 60;
+    document.getElementById('timer').textContent = "01:00";
+    clearInterval(countdown);
+    countdown = setInterval(() => {
+      time--;
+      const min = String(Math.floor(time / 60)).padStart(2, '0');
+      const sec = String(time % 60).padStart(2, '0');
+      document.getElementById('timer').textContent = `${min}:${sec}`;
+      if (time <= 0) {
+        clearInterval(countdown);
+        document.getElementById('popup').style.display = 'none';
+        showCertificate();
+      }
+    }, 1000);
+  }
+
+  function showCertificate() {
+    const type = document.getElementById('type').value;
+    const name = document.getElementById('name').value;
+    const grade = document.getElementById('grade').value;
+    const school = document.getElementById('school').value;
+    const director = document.getElementById('director').value;
+    const thanks = document.getElementById('thanks').value;
+
+    document.getElementById('student-name').textContent = `${type} : ${name}`;
+    document.getElementById('student-grade').textContent = `الصف: ${grade}`;
+    document.getElementById('school-name').textContent = `المدرسة: ${school}`;
+    document.getElementById('director-name').textContent = `المدير/ة: ${director}`;
+    document.getElementById('thanks-message').textContent = thanks;
+
+    document.getElementById('final-certificate').style.display = 'block';
+  }
+
+  function downloadImage() {
+    html2canvas(document.querySelector("#final-certificate")).then(canvas => {
+      const link = document.createElement('a');
+      link.download = 'شهادة_تقدير.png';
+      link.href = canvas.toDataURL();
+      link.click();
+    });
+  }
+
+  function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    html2canvas(document.querySelector("#final-certificate")).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'pt', 'a4');
+      const width = pdf.internal.pageSize.getWidth();
+      const height = canvas.height * width / canvas.width;
+      pdf.addImage(imgData, 'PNG', 0, 0, width, height);
+      pdf.save("شهادة_تقدير.pdf");
+    });
+  }
+
+  function shareCertificate() {
+    if (navigator.share) {
+      navigator.share({
+        title: 'شهادة تقدير',
+        text: 'أنشئ شهادة تقدير رائعة!',
+        url: window.location.href
+      }).catch(console.error);
+    } else {
+      alert("المشاركة غير مدعومة في هذا المتصفح.");
+    }
+  }
+</script>
+</body>
+</html>
