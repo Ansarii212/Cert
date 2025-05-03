@@ -32,6 +32,7 @@
       padding: 10px;
       background-color: #fcebd2;
       display: inline-block;
+      position: relative;
     }
     .medal {
       width: 30px;
@@ -129,15 +130,15 @@
       margin-top: 20px;
       display: none;
     }
-    #input-warning {
+    .notice {
       color: red;
-      font-size: 16px;
+      font-weight: bold;
       margin-top: 10px;
     }
-    #safari-warning {
-      color: red;
-      font-size: 16px;
-      margin-top: 10px;
+    .browser-note {
+      margin-top: 15px;
+      color: #000;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -154,8 +155,8 @@
   <input type="text" id="school" placeholder="أدخل اسم المدرسة" oninput="hideCertificate()">
   <input type="text" id="director" placeholder="أدخل اسم المدير/ة" oninput="hideCertificate()">
   <textarea id="thanks" placeholder="أدخل عبارات الشكر هنا" oninput="hideCertificate()"></textarea>
-  <button class="btn" onclick="validateInputs()">عرض الشهادة</button>
-  <p id="input-warning" style="display: none;">تنبيه : رجاء كتابة جميع البيانات</p>
+  <button class="btn" onclick="showPopup()">عرض الشهادة</button>
+  <div id="validation-message" class="notice"></div>
 </div>
 
 <div id="popup">
@@ -168,15 +169,17 @@
 
 <div id="final-certificate" class="certificate-container">
   <img class="logo" src="https://upload.wikimedia.org/wikipedia/ar/thumb/6/6b/Logo_of_Ministry_of_Education_Saudi_Arabia.svg/512px-Logo_of_Ministry_of_Education_Saudi_Arabia.svg.png" onerror="this.style.display='none'">
-
+  
   <h1 class="title">
-    <img class="medal" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAQlBMVEUAAAD///////////////////////////////////////////////////+SkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpLOzsyErAwNAAAAAXRSTlMAQObYZgAAAClJREFUSMdjYBgFo2AUjIJRMAwMdQ0QwhhGmICMKZgMJhAAAuAABt+pazwAAAABJRU5ErkJggg==">
+    <img class="medal" src="https://cdn-icons-png.flaticon.com/512/2583/2583391.png">
     شهادة تقدير
-    <img class="medal" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAQlBMVEUAAAD///////////////////////////////////////////////////+SkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpLOzsyErAwNAAAAAXRSTlMAQObYZgAAAClJREFUSMdjYBgFo2AUjIJRMAwMdQ0QwhhGmICMKZgMJhAAAuAABt+pazwAAAABJRU5ErkJggg==">
+    <img class="medal" src="https://cdn-icons-png.flaticon.com/512/2583/2583391.png">
   </h1>
-  <div id="student-name" class="recipient"></div>
+  
+  <div id="student-name" class="recipient" style="margin-top: 10px;"></div>
   <div id="student-grade" class="grade"></div>
   <div class="thanks" id="thanks-message"></div>
+
   <div class="school-director">
     <span id="school-name"></span>
     <div class="signature">توقيع المدير/ة</div>
@@ -188,11 +191,8 @@
   <button class="btn" onclick="downloadImage()">حفظ الصورة</button>
   <button class="btn" onclick="downloadPDF()">تحويل إلى PDF</button>
   <button class="btn" onclick="shareCertificate()">مشاركة</button>
-  <p id="safari-warning">تنبيه : اذا لم يتم حفظ الصورة عبر متصفح سفاري رجاء افتح الصفحة من خلال متصفح كروم</p>
-  <p style="color: black; font-size: 16px; margin-top: 10px;">
-    تنبيه : للدعم الفني الرجاء التواصل على هذا الايميل :
-    <a href="mailto:ahloka24@gmail.com" style="color: black; font-weight: bold;">ahloka24@gmail.com</a>
-  </p>
+  <div class="browser-note">تنبيه : إذا لم يتم حفظ الصورة عبر متصفح سفاري، رجاء افتح الصفحة من خلال متصفح كروم</div>
+  <div class="browser-note">تنبيه : للدعم الفني الرجاء التواصل على هذا الإيميل : ahloka24@gmail.com</div>
 </div>
 
 <script>
@@ -201,26 +201,23 @@
   function hideCertificate() {
     document.getElementById('final-certificate').style.display = 'none';
     document.querySelector('.footer-buttons').style.display = 'none';
-    document.getElementById('input-warning').style.display = 'none';
+    document.getElementById('validation-message').textContent = '';
   }
 
-  function validateInputs() {
+  function showPopup() {
+    const type = document.getElementById('type').value.trim();
     const name = document.getElementById('name').value.trim();
     const grade = document.getElementById('grade').value.trim();
     const school = document.getElementById('school').value.trim();
     const director = document.getElementById('director').value.trim();
     const thanks = document.getElementById('thanks').value.trim();
 
-    if (!name || !grade || !school || !director || !thanks) {
-      document.getElementById('input-warning').style.display = 'block';
+    if (!type || !name || !grade || !school || !director || !thanks) {
+      document.getElementById('validation-message').textContent = "تنبيه : رجاء كتابة جميع البيانات";
       return;
     }
 
-    document.getElementById('input-warning').style.display = 'none';
-    showPopup();
-  }
-
-  function showPopup() {
+    document.getElementById('validation-message').textContent = '';
     document.getElementById('popup').style.display = 'block';
     let time = 60;
     document.getElementById('timer').textContent = "01:00";
@@ -239,35 +236,36 @@
   }
 
   function showCertificate() {
-    const type = document.getElementById('type').value;
-    const name = document.getElementById('name').value;
-    const grade = document.getElementById('grade').value;
-    const school = document.getElementById('school').value;
-    const director = document.getElementById('director').value;
-    const thanks = document.getElementById('thanks').value;
-
-    document.getElementById('student-name').textContent = `${type} : ${name}`;
-    document.getElementById('student-grade').textContent = `الصف: ${grade}`;
-    document.getElementById('school-name').textContent = `المدرسة: ${school}`;
-    document.getElementById('director-name').textContent = `المدير/ة: ${director}`;
-    document.getElementById('thanks-message').textContent = thanks;
+    document.getElementById('student-name').textContent = `${document.getElementById('type').value} : ${document.getElementById('name').value}`;
+    document.getElementById('student-grade').textContent = `الصف: ${document.getElementById('grade').value}`;
+    document.getElementById('school-name').textContent = `المدرسة: ${document.getElementById('school').value}`;
+    document.getElementById('director-name').textContent = `المدير/ة: ${document.getElementById('director').value}`;
+    document.getElementById('thanks-message').textContent = document.getElementById('thanks').value;
 
     document.getElementById('final-certificate').style.display = 'block';
     document.querySelector('.footer-buttons').style.display = 'block';
   }
 
   function downloadImage() {
-    html2canvas(document.querySelector("#final-certificate")).then(canvas => {
+    html2canvas(document.querySelector("#final-certificate"), {
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: null
+    }).then(canvas => {
       const link = document.createElement('a');
       link.download = 'شهادة_تقدير.png';
-      link.href = canvas.toDataURL('image/png');
+      link.href = canvas.toDataURL();
       link.click();
     });
   }
 
   function downloadPDF() {
     const { jsPDF } = window.jspdf;
-    html2canvas(document.querySelector("#final-certificate")).then(canvas => {
+    html2canvas(document.querySelector("#final-certificate"), {
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: null
+    }).then(canvas => {
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'pt', 'a4');
       const width = pdf.internal.pageSize.getWidth();
