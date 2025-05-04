@@ -9,30 +9,44 @@
   <style>
     body {
       font-family: 'Amiri', serif;
-      background: #f5f0e6;
+      background: #4b2e2e;
       margin: 0;
       padding: 0;
       text-align: center;
-      color: #4b2e2e;
+      color: white;
     }
     .certificate-container {
-      border: 6px double #8b5e3c;
+      border: 4px solid #fff;
       border-radius: 20px;
       margin: 20px auto;
       padding: 40px;
-      background: #fffaf0;
+      background: #5c3b2e;
       width: 90%;
       max-width: 800px;
       position: relative;
     }
+    .home-button {
+      margin: 20px 0;
+    }
+    .home-button a {
+      background-color: #fff;
+      color: #4b2e2e;
+      padding: 10px 25px;
+      text-decoration: none;
+      font-size: 18px;
+      border-radius: 12px;
+      font-weight: bold;
+      display: inline-block;
+    }
     h1.title {
       font-size: 40px;
       margin: 10px 0 0;
-      border: 2px dotted #a67c52;
+      border: 2px dotted #fff;
       padding: 10px;
-      background-color: #fcebd2;
+      background-color: #6d4c41;
       display: inline-block;
       position: relative;
+      color: #fff;
     }
     .medal {
       width: 30px;
@@ -46,23 +60,25 @@
       width: 60px;
     }
     .input-section {
-      background-color: #f3e5d1;
+      background-color: #6d4c41;
       padding: 20px;
       border-radius: 15px;
       margin: 20px auto;
       width: 90%;
       max-width: 600px;
-      border: 2px dotted #a67c52;
+      border: 2px dotted #fff;
     }
     .input-section input, select, textarea {
       display: block;
       margin: 10px auto;
-      padding: 10px;
+      padding: 12px;
       width: 90%;
-      font-size: 16px;
+      font-size: 18px;
       text-align: center;
       border-radius: 10px;
-      border: 1px solid #a67c52;
+      border: 1px solid #fff;
+      background: #fff;
+      color: #000;
     }
     textarea {
       min-height: 100px;
@@ -71,22 +87,24 @@
     .btn {
       background-color: #f5d7a1;
       color: #000;
-      padding: 10px 20px;
+      padding: 12px 28px;
       margin: 10px 5px;
-      border: 2px solid #8b5e3c;
+      border: 2px solid #fff;
       border-radius: 12px;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 18px;
+      font-weight: bold;
     }
     #popup {
       display: none;
-      background-color: #f9f1e5;
+      background-color: #7e5d4c;
       border-radius: 15px;
       padding: 20px;
       margin: 20px auto;
       width: 90%;
       max-width: 500px;
-      border: 2px solid #8b5e3c;
+      border: 2px solid #fff;
+      color: #fff;
     }
     #timer {
       font-size: 28px;
@@ -99,11 +117,12 @@
     .recipient {
       font-size: 28px;
       font-weight: bold;
-      background-color: #fcebd2;
+      background-color: #6d4c41;
       display: inline-block;
       padding: 10px 20px;
       border-radius: 10px;
       margin-top: 15px;
+      color: #fff;
     }
     .grade {
       font-size: 22px;
@@ -121,6 +140,7 @@
       align-items: center;
       margin-top: 40px;
       font-weight: bold;
+      flex-wrap: wrap;
     }
     .signature {
       text-align: center;
@@ -137,75 +157,25 @@
     }
     .browser-note {
       margin-top: 15px;
-      color: #000;
+      color: #fff;
       font-weight: bold;
     }
-
-    /* Media Queries for Responsiveness */
-    @media (max-width: 768px) {
-      h1.title {
-        font-size: 30px;
-      }
-      .certificate-container {
-        padding: 20px;
-      }
-      .input-section input, .input-section select, .input-section textarea {
-        font-size: 14px;
-      }
+    @media (max-width: 600px) {
       .btn {
-        padding: 8px 16px;
-        font-size: 14px;
-      }
-      #timer {
-        font-size: 24px;
-      }
-      .recipient {
-        font-size: 24px;
-      }
-      .grade {
-        font-size: 18px;
-      }
-      .thanks {
+        width: 90%;
         font-size: 16px;
       }
-    }
-
-    @media (max-width: 480px) {
-      .certificate-container {
-        padding: 10px;
-      }
-      h1.title {
-        font-size: 24px;
-      }
-      .medal {
-        width: 25px;
-      }
-      .logo {
-        width: 50px;
-      }
-      .input-section input, .input-section select, .input-section textarea {
-        font-size: 12px;
-      }
-      .btn {
-        padding: 6px 12px;
-        font-size: 12px;
-      }
-      #timer {
-        font-size: 20px;
-      }
-      .recipient {
-        font-size: 20px;
-      }
-      .grade {
+      .input-section input, select, textarea {
         font-size: 16px;
-      }
-      .thanks {
-        font-size: 14px;
       }
     }
   </style>
 </head>
 <body>
+
+<div class="home-button">
+  <a href="https://ansarii212.github.io/Cert/">الصفحة الرئيسية</a>
+</div>
 
 <div class="input-section">
   <h2>بيانات الشهادة</h2>
@@ -226,21 +196,20 @@
   <div>جاري إصدار الشهادة</div>
   <div id="timer">01:00</div>
   <p>يرجى الاشتراك:</p>
-  <a class="btn" href="youtube://channel/UCOyD7hrUD4FH02uSaHkVd6A">يوتيوب</a>
-  <a class="btn" href="x://user?screen_name=forms_teachers">X</a>
+  <a class="btn" href="intent://youtube.com/@alrahhala#Intent;package=com.google.android.youtube;scheme=https;end">يوتيوب</a>
+  <a class="btn" href="intent://twitter.com/forms_teachers#Intent;package=com.twitter.android;scheme=https;end">X</a>
 </div>
 
 <div id="final-certificate" class="certificate-container">
   <img class="logo" src="https://upload.wikimedia.org/wikipedia/ar/thumb/6/6b/Logo_of_Ministry_of_Education_Saudi_Arabia.svg/512px-Logo_of_Ministry_of_Education_Saudi_Arabia.svg.png" onerror="this.style.display='none'">
   
   <h1 class="title">
-  <img class="medal" src="https://cdn-icons-png.flaticon.com/512/2583/2583391.png">
-  شهادة تقدير
-  <img class="medal" src="https://cdn-icons-png.flaticon.com/512/2583/2583391.png"><br>
-  <div id="student-name" class="recipient" style="margin-top: 10px;"></div>
-</h1>
-  
-  <div id="student-name" class="recipient" style="margin-top: 10px;"></div>
+    <img class="medal" src="https://cdn-icons-png.flaticon.com/512/2583/2583391.png">
+    شهادة تقدير
+    <img class="medal" src="https://cdn-icons-png.flaticon.com/512/2583/2583391.png"><br>
+    <div id="student-name" class="recipient" style="margin-top: 10px;"></div>
+  </h1>
+
   <div id="student-grade" class="grade"></div>
   <div class="thanks" id="thanks-message"></div>
 
@@ -352,4 +321,4 @@
   }
 </script>
 </body>
-</html
+</html>
