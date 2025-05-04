@@ -2,291 +2,210 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>شهادة تقدير</title>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مراجعات الاختبارات</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
   <style>
     body {
-      font-family: 'Amiri', serif;
-      background: #f5f0e6;
+      font-family: 'Arial', sans-serif;
+      background-color: #f5f0e6;
       margin: 0;
-      padding: 0;
-      text-align: center;
-      color: #4b2e2e;
-    }
-    .certificate-container {
-      border: 6px double #8b5e3c;
-      border-radius: 20px;
-      margin: 20px auto;
-      padding: 40px;
-      background: #fffaf0;
-      width: 90%;
-      max-width: 800px;
-      position: relative;
-    }
-    h1.title {
-      font-size: 40px;
-      margin: 10px 0 0;
-      border: 2px dotted #a67c52;
-      padding: 10px;
-      background-color: #fcebd2;
-      display: inline-block;
-      position: relative;
-    }
-    .medal {
-      width: 30px;
-      vertical-align: middle;
-      margin: 0 10px;
-    }
-    .logo {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      width: 60px;
-    }
-    .input-section {
-      background-color: #f3e5d1;
       padding: 20px;
-      border-radius: 15px;
-      margin: 20px auto;
-      width: 90%;
-      max-width: 600px;
-      border: 2px dotted #a67c52;
+      color: #4b2e2e;
+      border: 10px solid #8b5e3c;
     }
-    .input-section input, select, textarea {
-      display: block;
-      margin: 10px auto;
-      padding: 10px;
-      width: 90%;
-      font-size: 16px;
-      text-align: center;
-      border-radius: 10px;
-      border: 1px solid #a67c52;
-    }
-    textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-    .btn {
-      background-color: #f5d7a1;
-      color: #000;
+
+    h1.title {
+      font-size: 32px;
+      background-color: #4b2e2e;
+      color: white;
       padding: 10px 20px;
-      margin: 10px 5px;
+      border-radius: 15px;
+      display: inline-block;
+    }
+
+    .section-title {
+      font-size: 24px;
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      background-color: #f5d7a1;
       border: 2px solid #8b5e3c;
       border-radius: 12px;
-      cursor: pointer;
+      color: #4b2e2e;
+      padding: 10px;
       font-size: 16px;
+      margin: 10px 5px;
+      cursor: pointer;
+      width: auto;
+      min-width: 180px;
+      transition: background-color 0.3s ease;
     }
-    #popup {
+
+    .button:hover {
+      background-color: #8b5e3c;
+      color: white;
+    }
+
+    .centered {
+      text-align: center;
+    }
+
+    #qr-section {
       display: none;
-      background-color: #f9f1e5;
-      border-radius: 15px;
-      padding: 20px;
-      margin: 20px auto;
-      width: 90%;
-      max-width: 500px;
-      border: 2px solid #8b5e3c;
+      text-align: center;
+      margin-top: 30px;
     }
-    #timer {
-      font-size: 28px;
+
+    #qr-code {
+      margin-bottom: 10px;
+    }
+
+    .label-text {
       font-weight: bold;
+      margin-bottom: 5px;
     }
-    #final-certificate {
-      display: none;
-      margin: 30px auto;
+
+    .top-header {
+      text-align: center;
+      margin-bottom: 20px;
+      position: relative;
     }
-    .recipient {
-      font-size: 28px;
-      font-weight: bold;
-      background-color: #fcebd2;
-      display: inline-block;
-      padding: 10px 20px;
-      border-radius: 10px;
-      margin-top: 15px;
+
+    .top-header h2 {
+      margin: 0;
     }
-    .grade {
-      font-size: 22px;
-      margin-top: 5px;
+
+    .top-header p {
+      margin: 5px 0 0;
+      font-size: 18px;
     }
-    .thanks {
-      font-size: 20px;
-      margin-top: 20px;
-      line-height: 1.7;
-      white-space: pre-line;
+
+    .home-button {
+      position: absolute;
+      left: 20px;
+      top: 10px;
+      background-color: #8b5e3c;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-size: 14px;
     }
-    .school-director {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+
+    .support, .links-section {
       margin-top: 40px;
       font-weight: bold;
-    }
-    .signature {
       text-align: center;
-      flex: 1;
     }
-    .footer-buttons {
-      margin-top: 20px;
-      display: none;
-    }
-    .notice {
+
+    .alert-text {
       color: red;
-      font-weight: bold;
+      font-size: 12px;
       margin-top: 10px;
     }
-    .browser-note {
-      margin-top: 15px;
-      color: #000;
-      font-weight: bold;
+
+    .social-box {
+      margin-top: 30px;
+      padding: 20px;
+      border: 2px solid #8b5e3c;
+      border-radius: 15px;
+      display: inline-block;
+      background-color: #fff8e1;
+    }
+
+    .social-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .small-button {
+      background-color: #f5d7a1;
+      border: 2px solid #8b5e3c;
+      border-radius: 12px;
+      color: #4b2e2e;
+      padding: 8px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      min-width: 130px;
+    }
+
+    .footer-links a {
+      display: block;
+      color: #4b2e2e;
+      text-decoration: none;
+      margin: 8px 0;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .button {
+        min-width: 100px;
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .social-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
     }
   </style>
 </head>
 <body>
 
-<div class="input-section">
-  <h2>بيانات الشهادة</h2>
-  <select id="type" onchange="hideCertificate()">
-    <option value="الطالب">الطالب</option>
-    <option value="الطالبة">الطالبة</option>
-  </select>
-  <input type="text" id="name" placeholder="أدخل الاسم هنا" oninput="hideCertificate()">
-  <input type="text" id="grade" placeholder="أدخل الصف" oninput="hideCertificate()">
-  <input type="text" id="school" placeholder="أدخل اسم المدرسة" oninput="hideCertificate()">
-  <input type="text" id="director" placeholder="أدخل اسم المدير/ة" oninput="hideCertificate()">
-  <textarea id="thanks" placeholder="أدخل عبارات الشكر هنا" oninput="hideCertificate()"></textarea>
-  <button class="btn" onclick="showPopup()">عرض الشهادة</button>
-  <div id="validation-message" class="notice"></div>
+<div class="top-header">
+  <button class="home-button" onclick="location.href='https://ansarii212.github.io/Master/'">الصفحة الرئيسية</button>
+  <h2>موقع خدمات المعلم والطالب</h2>
+  <p>نسعد بخدمة المعلمين والمعلمات والطلاب والطالبات في مملكتنا الحبيبة 🇸🇦♥️</p>
 </div>
 
-<div id="popup">
-  <div>جاري إصدار الشهادة</div>
-  <div id="timer">01:00</div>
-  <p>يرجى الاشتراك:</p>
-  <a class="btn" href="youtube://channel/UCOyD7hrUD4FH02uSaHkVd6A">يوتيوب</a>
-  <a class="btn" href="x://user?screen_name=forms_teachers">X</a>
-</div>
+<div class="centered">
+  <h1 class="title">مراجعات الاختبارات</h1>
 
-<div id="final-certificate" class="certificate-container">
-  <img class="logo" src="https://upload.wikimedia.org/wikipedia/ar/thumb/6/6b/Logo_of_Ministry_of_Education_Saudi_Arabia.svg/512px-Logo_of_Ministry_of_Education_Saudi_Arabia.svg.png" onerror="this.style.display='none'">
-    
-<h1 class="title">
-  <img class="medal" src="https://cdn-icons-png.flaticon.com/512/2583/2583391.png">
-  شهادة تقدير
-  <img class="medal" src="https://cdn-icons-png.flaticon.com/512/2583/2583391.png">
-  <br>
-  <span id="student-name" class="recipient" style="margin-top: 10px; display: block;"></span>
-</h1>
-  
-  <div id="student-grade" class="grade"></div>
-  <div class="thanks" id="thanks-message"></div>
+  <div class="section-title">المرحلة الابتدائية</div>
+  <button class="button" onclick="showMessage('مراجعة انجليزي أول ابتدائي الترم الثالث')">مراجعة انجليزي أول ابتدائي الترم الثالث</button>
+  <button class="button" onclick="showMessage('مراجعة انجليزي ثاني ابتدائي الترم الثالث')">مراجعة انجليزي ثاني ابتدائي الترم الثالث</button>
+  <button class="button" onclick="showMessage('مراجعة انجليزي ثالث ابتدائي الترم الثالث')">مراجعة انجليزي ثالث ابتدائي الترم الثالث</button>
+  <button class="button" onclick="showMessage('مراجعة انجليزي رابع ابتدائي الترم الثالث')">مراجعة انجليزي رابع ابتدائي الترم الثالث</button>
+  <button class="button" onclick="showMessage('مراجعة انجليزي خامس ابتدائي الترم الثالث')">مراجعة انجليزي خامس ابتدائي الترم الثالث</button>
+  <button class="button" onclick="showMessage('مراجعة انجليزي سادس ابتدائي الترم الثالث')">مراجعة انجليزي سادس ابتدائي الترم الثالث</button>
 
-  <div class="school-director">
-    <span id="school-name"></span>
-    <div class="signature">توقيع المدير/ة</div>
-    <span id="director-name"></span>
+  <div class="section-title">المرحلة المتوسطة</div>
+  <button class="button" onclick="goToLink('مراجعة انجليزي أول متوسط الترم الثالث', 'https://drive.google.com/file/d/18xJWxvk7Zcxklf0kZ0uVFIupUskblDTo/view?usp=drivesdk')">مراجعة انجليزي أول متوسط الترم الثالث</button>
+  <button class="button" onclick="goToLink('مراجعة انجليزي ثاني متوسط الترم الثالث', 'https://drive.google.com/file/d/1XNIpdzRyFXXS5V0w9iyRXJPlWLIvRxLB/view?usp=drivesdk')">مراجعة انجليزي ثاني متوسط الترم الثالث</button>
+  <button class="button" onclick="goToLink('مراجعة انجليزي ثالث متوسط الترم الثالث', 'https://drive.google.com/file/d/1pob2mnm_V1sMjodXwxSQ-ieGsnZjFBTR/view?usp=drivesdk')">مراجعة انجليزي ثالث متوسط الترم الثالث</button>
+
+  <div class="section-title">المرحلة الثانوية</div>
+  <button class="button" onclick="showMessage('مراجعة انجليزي أول ثانوي الترم الثالث')">مراجعة انجليزي أول ثانوي الترم الثالث</button>
+  <button class="button" onclick="showMessage('مراجعة انجليزي ثاني ثانوي الترم الثالث')">مراجعة انجليزي ثاني ثانوي الترم الثالث</button>
+  <button class="button" onclick="showMessage('مراجعة انجليزي ثالث ثانوي الترم الثالث')">مراجعة انجليزي ثالث ثانوي الترم الثالث</button>
+
+  <div id="qr-section">
+    <p class="label-text" id="qr-label"></p>
+    <canvas id="qr-code"></canvas><br>
+    <button class="small-button" onclick="saveQR()">حفظ رمز QR</button>
+    <p class="alert-text">تنبيه: إذا لم يتم حفظ صورة QR من خلال متصفح سفاري، افتح الصفحة من متصفح كروم</p>
   </div>
-</div>
 
-<div class="footer-buttons">
-  <button class="btn" onclick="downloadImage()">حفظ الصورة</button>
-  <button class="btn" onclick="downloadPDF()">تحويل إلى PDF</button>
-  <button class="btn" onclick="shareCertificate()">مشاركة</button>
-  <div class="browser-note">تنبيه : إذا لم يتم حفظ الصورة عبر متصفح سفاري، رجاء افتح الصفحة من خلال متصفح كروم</div>
-  <div class="browser-note">تنبيه : للدعم الفني الرجاء التواصل على هذا الإيميل : ahloka24@gmail.com</div>
-</div>
+  <div class="social-box">
+    <div class="social-buttons">
+      <button class="small-button" onclick="window.open('https://youtube.com/@alrahhala?si=FStCbr1Um0zCQXgU', '_blank')">اشترك في يوتيوب</button>
+      <button class="small-button" onclick="window.open('x-app://forms_teachers', '_blank')">تابعني على X</button>
+      <button class="small-button" onclick="window.open('https://ansarii212.github.io/Master/', '_blank')">مشاركة رابط الماستر</button>
+    </div>
+  </div>
 
-<script>
-  let countdown;
-
-  function hideCertificate() {
-    document.getElementById('final-certificate').style.display = 'none';
-    document.querySelector('.footer-buttons').style.display = 'none';
-    document.getElementById('validation-message').textContent = '';
-  }
-
-  function showPopup() {
-    const type = document.getElementById('type').value.trim();
-    const name = document.getElementById('name').value.trim();
-    const grade = document.getElementById('grade').value.trim();
-    const school = document.getElementById('school').value.trim();
-    const director = document.getElementById('director').value.trim();
-    const thanks = document.getElementById('thanks').value.trim();
-
-    if (!type || !name || !grade || !school || !director || !thanks) {
-      document.getElementById('validation-message').textContent = "تنبيه : رجاء كتابة جميع البيانات";
-      return;
-    }
-
-    document.getElementById('validation-message').textContent = '';
-    document.getElementById('popup').style.display = 'block';
-    let time = 60;
-    document.getElementById('timer').textContent = "01:00";
-    clearInterval(countdown);
-    countdown = setInterval(() => {
-      time--;
-      const min = String(Math.floor(time / 60)).padStart(2, '0');
-      const sec = String(time % 60).padStart(2, '0');
-      document.getElementById('timer').textContent = `${min}:${sec}`;
-      if (time <= 0) {
-        clearInterval(countdown);
-        document.getElementById('popup').style.display = 'none';
-        showCertificate();
-      }
-    }, 1000);
-  }
-
-  function showCertificate() {
-    document.getElementById('student-name').textContent = `${document.getElementById('type').value} : ${document.getElementById('name').value}`;
-    document.getElementById('student-grade').textContent = `الصف: ${document.getElementById('grade').value}`;
-    document.getElementById('school-name').textContent = `المدرسة: ${document.getElementById('school').value}`;
-    document.getElementById('director-name').textContent = `المدير/ة: ${document.getElementById('director').value}`;
-    document.getElementById('thanks-message').textContent = document.getElementById('thanks').value;
-
-    document.getElementById('final-certificate').style.display = 'block';
-    document.querySelector('.footer-buttons').style.display = 'block';
-  }
-
-  function downloadImage() {
-    html2canvas(document.querySelector("#final-certificate"), {
-      useCORS: true,
-      allowTaint: true,
-      backgroundColor: null
-    }).then(canvas => {
-      const link = document.createElement('a');
-      link.download = 'شهادة_تقدير.png';
-      link.href = canvas.toDataURL();
-      link.click();
-    });
-  }
-
-  function downloadPDF() {
-    const { jsPDF } = window.jspdf;
-    html2canvas(document.querySelector("#final-certificate"), {
-      useCORS: true,
-      allowTaint: true,
-      backgroundColor: null
-    }).then(canvas => {
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'pt', 'a4');
-      const width = pdf.internal.pageSize.getWidth();
-      const height = canvas.height * width / canvas.width;
-      pdf.addImage(imgData, 'PNG', 0, 0, width, height);
-      pdf.save("شهادة_تقدير.pdf");
-    });
-  }
-
-  function shareCertificate() {
-    if (navigator.share) {
-      navigator.share({
-        title: 'شهادة تقدير',
-        text: 'أنشئ شهادة تقدير رائعة!',
-        url: window.location.href
-      }).catch(console.error);
-    } else {
-      alert("المشاركة غير مدعومة في هذا المتصفح.");
-    }
-  }
-</script>
-</body>
-</html>
+  <div class="support links-section">
+    <div class="footer-links">
+      <a href="https://www.privacypolicies.com/live/a501e028-3ccc-4524-88bb-59ae0632a03d">سياسة الخصوصية</a>
+      <
